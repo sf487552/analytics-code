@@ -41,6 +41,8 @@ $('*[id="resource-search"]').on('submit', function(e) {
     console.log('Form Submitted', $(this).text()); 
 });
 
+//======================================================================================
+
 // jQuery tracking form input blur for whole document 
 $('input').blur(function(e){
     var val = $(this).val()
