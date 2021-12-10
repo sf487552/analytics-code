@@ -3,12 +3,19 @@ $(document).on('click', function() {
   console.log('clicked');
 });
 
+// Vanilla JS track any click event on page
+document.onclick = (e) =>{
+    console.log('clicked');
+};
+
 //======================================================================================
 
 // jQuery tracking everytime apply button is clicked, .click handler
 $('*[data-nav-link="Apply"]').click(function(){
     console.log('clicked' , $(this).text());
 });
+
+ 
 
 
 // jQuery tracking everytime button with data-nav-link is clicked, .click handler
