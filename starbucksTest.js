@@ -4,6 +4,7 @@ var categoryMap = {
     "#/scan": "Scan",
     "#/explore": "Explore"
 };
+
 // identify actions
 var actionMap = {
     "Trace Your Coffee": "Trace Coffee Button - click",
@@ -27,11 +28,11 @@ _analytics.onEvent("click" , "button" , function(e) {
 });
 
 // tracks "camera not working" button only because object is a div and not a button
-_analytics.onEvent("click" , ".sb-social-share__item" , function () {
+_analytics.onEvent("click" , ".sc-camera-not-working-btn" , function () {
     var label = e.target.innerText;
-        var category = categoryMap[window.location.hash]
-        var action = actionMap[label]
-        return console.log({category, action, label})
+    var category = categoryMap[window.location.hash]
+    var action = actionMap[label]
+    return console.log({category, action, label})
 })
 
 // track language change selector
@@ -55,6 +56,7 @@ _analytics.onEvent("click" , ".footer-link" , function(e) {
     var linkName = e.target.innerHTML;
     return console.log({category: "Navigation" , action: `${linkName} Link - click`})
 });
+
 // track back link clicks
 _analytics.onEvent("click" , ".sb-subnav-breadcrumbIcon" , function(e) {
     return console.log({category: "Navigation" , action: "Back Link - click"})
