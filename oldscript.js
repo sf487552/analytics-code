@@ -1,9 +1,12 @@
+// track clicks and identify category, action and label of click
+
 // identify categories
 var categoryMap = {
     "#/": "Home",
     "#/scan": "Scan",
     "#/explore": "Explore"
 };
+
 // identify actions
 var actionMap = {
     "Trace Your Coffee": "Trace Coffee Button - click",
@@ -13,26 +16,32 @@ var actionMap = {
     "Don't see the camera?": "Don't See The Camera Link - click",
     "Still here": "Still Here Button - click",
 };
+
 var getSiteSection = function (hash) {
     return hash.split('/')[2]
 };
 
 // tracks any button and sends back category, action, label based off categoryMap and actionMap
-_analytics.onEvent("click" , "button" , function(e) {
-    var label = e.target.innerText;
-    var category = categoryMap[window.location.hash] || getSiteSection(window.location.hash);
-    var action = actionMap[label]
-    // return window._analytics.trackEvent(category, action, label)
-    return console.log({category, action, label})
+document.querySelectorAll('button').forEach(button => {
+    button.addEventListener('click' , (e) => {
+        var label = e.target.innerText;
+        var category = categoryMap[window.location.hash] || getSiteSection(window.location.hash);
+        var action = actionMap[label]
+        // return window._analytics.trackEvent(category, action, label)
+        return console.log({category, action, label})
+    });
 });
 
 // tracks "camera not working" button only because object is a div and not a button
-_analytics.onEvent("click" , ".sb-social-share__item" , function () {
-    var label = e.target.innerText;
+var cameraErrBtn = document.querySelector('.sc-camera-not-working-btn');
+if(!!cameraErrBtn) {
+    cameraErrBtn.addEventListener('click' , (e) => {
+        var label = e.target.innerText;
         var category = categoryMap[window.location.hash]
         var action = actionMap[label]
         return console.log({category, action, label})
 })
+};
 
 // track language change selector
 document.getElementById('language').addEventListener('change' , function() {
@@ -44,10 +53,11 @@ document.getElementById('language').addEventListener('change' , function() {
 // track social share button clicks
 _analytics.onEvent("click" , ".sb-social-share__item" , function() {
     var platformName = this.getAttribute('aria-label');
-    if (!!platformName) {
+    if(this.hasAttribute('aria-label')) {
         return console.log({category: "Result Detail Page" , action: `Journey ${platformName} Share Link - click`})
+    } else {
+        return console.log({category: "Result Detail Page" , action: "Journey Email Share Link - click"})
     }
-    return console.log({category: "Result Detail Page" , action: "Journey Email Share Link - click"})
 });
 
 // track footer button clicks
