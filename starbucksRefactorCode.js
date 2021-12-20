@@ -5,12 +5,23 @@
 // }
 
 // sets any other page of the site as "Other"
-function getPageType() {
-    return categoryMap = {
+// function getPageType() {
+//     return categoryMap = {
+//         "#/": "Home",
+//         "#/scan": "Scan",
+//         "#/explore": "Explore"
+//     }[location.hash] || "Other";
+// }
+
+// sets any other page of the site as "Other"
+function getPageType(key) {
+    const categoryMap = {
         "#/": "Home",
         "#/scan": "Scan",
         "#/explore": "Explore"
-    }[location.hash] || "Other";
+    }
+    
+    return categoryMap([key]) || "Other";
 }
 
 // tracks any button and sends back category, action, label based off categoryMap and actionMap
@@ -48,4 +59,5 @@ _analytics.onEvent("click" , ".sb-social-share__item" , function() {
     }
     return _analytics.trackEvent({category: "Result Detail Page" , action: "Journey Email Share Link - click"})
 });
+
 
